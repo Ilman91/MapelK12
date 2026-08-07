@@ -12,5 +12,14 @@ class Aktor extends Model
         'umur',
         'foto',
     ];
+    public function films()
+    {
+        return $this->belongsToMany(
+            Film::class,
+            'aktor_films',
+            'id_aktor',
+            'id_film'
+        );
+    }
     public $timestamps = true;
 }

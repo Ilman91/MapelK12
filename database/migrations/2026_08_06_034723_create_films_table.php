@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('films', function (Blueprint $table) {
             $table->id();
-            $table->string('judul');
+            $table->string('judul')->unique();
             $table->string('durasi');
             $table->string('rating');
             $table->text('deskripsi');
@@ -24,6 +24,13 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->timestamps();
         });
+
+        Schema::create('aktor_films', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('id_film')->constrained('films')->cascadeOnDelete();
+            $table->foreignId('id_aktor')->constrained('aktors')->cascadeOnDelete();
+            $table->timestamps();
+        });
     }
 
     /**
@@ -32,5 +39,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('films');
+        Schema::dropIfExists('aktor_films');
     }
 };
